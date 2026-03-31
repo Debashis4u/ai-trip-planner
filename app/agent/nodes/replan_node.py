@@ -14,6 +14,7 @@ MAX_REPLAN_ATTEMPTS = 2
 def replan_node(state: dict):
     destination = state.get("destination")
     budget = state.get("budget")
+    currency = state.get("currency") or "USD"
     duration = state.get("duration")
     weather = state.get("weather")
     estimated_cost = state.get("estimated_cost")
@@ -35,9 +36,9 @@ def replan_node(state: dict):
         prompt = f"""
         Revise the trip plan for {destination} to fit the budget.
         Duration: {duration} days
-        Budget: {budget} USD
-        Original Estimated Cost: {estimated_cost} USD
-        Need to reduce by: ~{cost_diff} USD
+        Budget: {budget} {currency}
+        Original Estimated Cost: {estimated_cost} {currency}
+        Need to reduce by: ~{cost_diff} {currency}
         Weather: {weather}
 
         Create a {duration}-day itinerary focusing on budget-friendly activities and accommodations.

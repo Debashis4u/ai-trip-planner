@@ -13,6 +13,7 @@ load_dotenv()
 def transportation_node(state: dict):
     destination = state.get("destination")
     budget = state.get("budget")
+    currency = state.get("currency") or "USD"
     duration = state.get("duration")
     start_date = state.get("start_date")
     end_date = state.get("end_date")
@@ -40,7 +41,7 @@ def transportation_node(state: dict):
             
             prompt = f"""
             Suggest transportation options for a {duration}-day trip to {destination}{date_info}.
-            Budget: {budget} USD total
+            Budget: {budget} {currency} total
             Preferences: {prefs_text}
             
             Consider getting to/from the destination, local transportation, and any travel within the trip.
@@ -77,6 +78,6 @@ def transportation_node(state: dict):
                 print(f"❌ Transportation Error: {error_msg}")
                 return {
                     **state,
-                    "transportation": f"Flight to {destination}, local taxis/buses (~$100-200 total)",
+                    "transportation": f"Flight to {destination}, local taxis/buses (~100-200 {currency} total)",
                     "errors": state.get("errors", []) + [f"Transportation suggestion failed: {error_msg}"]
                 }

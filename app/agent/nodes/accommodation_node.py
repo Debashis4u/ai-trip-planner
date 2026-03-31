@@ -8,6 +8,7 @@ load_dotenv()
 def accommodation_node(state: dict):
     destination = state.get("destination")
     budget = state.get("budget")
+    currency = state.get("currency") or "USD"
     duration = state.get("duration")
     start_date = state.get("start_date")
     end_date = state.get("end_date")
@@ -35,13 +36,13 @@ def accommodation_node(state: dict):
             
             prompt = f"""
             Suggest specific accommodation options for a {duration}-day trip to {destination}{date_info}.
-            Budget: {budget} USD total
+            Budget: {budget} {currency} total
             Preferences: {prefs_text}
             
             Suggest 3 specific, real hotels/resorts/hostels with:
             - Exact hotel name
             - Location/area
-            - Estimated nightly rate in USD
+            - Estimated nightly rate in {currency}
             - Total cost for {duration} nights
             - Why it fits the budget and preferences
             
@@ -78,6 +79,6 @@ def accommodation_node(state: dict):
                 print(f"❌ Accommodation Error: {error_msg}")
                 return {
                     **state,
-                    "accommodation": f"Budget hotel/hostel in {destination} (~$30-50/night)",
+                    "accommodation": f"Budget hotel/hostel in {destination} (~30-50 {currency}/night)",
                     "errors": state.get("errors", []) + [f"Accommodation suggestion failed: {error_msg}"]
                 }

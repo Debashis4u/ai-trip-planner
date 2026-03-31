@@ -18,14 +18,17 @@ def parse_node(state: dict):
                 {
                     \"destination\": \"string\",
                     \"budget\": number or null,
+                    \"currency\": \"INR|USD|EUR|GBP|JPY|AUD|CAD\" or null,
                     \"duration\": number or null,
                     \"start_date\": \"YYYY-MM-DD\" or null
                 }
                 Rules:
                 - `start_date` must always be ISO format YYYY-MM-DD when present.
+                - If budget currency is mentioned (e.g., INR, Rs, $, USD), map it to a 3-letter code in `currency`.
                 - If user gives a date without year (e.g., \"20th April\"), infer a sensible future date using today="""
         + today_str
         + """.
+                - If no currency is explicitly mentioned, return null for `currency`.
                 - If no date is mentioned, return null for `start_date`.
                 """
     )
@@ -50,16 +53,25 @@ def parse_node(state: dict):
 
         result = json.loads(result_text)
         llm_start_date = result.get("start_date")
+        currency = result.get("currency")
         if llm_start_date:
             try:
                 llm_start_date = datetime.strptime(llm_start_date, "%Y-%m-%d").strftime("%Y-%m-%d")
             except ValueError:
                 llm_start_date = None
 
+        if isinstance(currency, str):
+            currency = currency.strip().upper()
+            if currency == "RS":
+                currency = "INR"
+            if len(currency) != 3:
+                currency = None
+
         return {
             **state,
             "destination": result.get("destination"),
             "budget": result.get("budget"),
+            "currency": currency,
             "duration": result.get("duration"),
             "start_date": existing_date or llm_start_date,
         }

@@ -68,6 +68,35 @@ function App() {
     return JSON.stringify(obj, null, 2);
   }
 
+  function renderSectionValue(key, value) {
+    if (Array.isArray(value)) {
+      if (value.length === 0) {
+        return html`<p>No items available.</p>`;
+      }
+      const isNumberedSection = key === "plan" || key === "itinerary";
+      const ListTag = isNumberedSection ? "ol" : "ul";
+      return html`
+        <${ListTag} className=${`section-list ${isNumberedSection ? "section-list-numbered" : ""}`}>
+          ${value.map((item, idx) => html`<li key=${idx}>${typeof item === "string" ? item : renderObject(item)}</li>`) }
+        </${ListTag}>
+      `;
+    }
+
+    if (value && typeof value === "object") {
+      return html`<pre>${renderObject(value)}</pre>`;
+    }
+
+    if (typeof value === "string") {
+      return html`<p>${value}</p>`;
+    }
+
+    if (typeof value === "number" || typeof value === "boolean") {
+      return html`<p>${String(value)}</p>`;
+    }
+
+    return html`<p>Not available</p>`;
+  }
+
   function formatSectionTitle(key) {
     return key
       .replace(/_/g, " ")
@@ -173,7 +202,7 @@ function App() {
                           <span className="section-icon">${getSectionIcon(key)}</span>
                         </div>
                         <div className="section-content">
-                          ${typeof value === "string" ? html`<p>${value}</p>` : html`<pre>${renderObject(value)}</pre>`}
+                          ${renderSectionValue(key, value)}
                         </div>
                       </article>
                     `,

@@ -13,6 +13,7 @@ load_dotenv()
 def plan_node(state: dict):
     destination = state.get("destination")
     budget = state.get("budget")
+    currency = state.get("currency") or "USD"
     duration = state.get("duration")
     start_date = state.get("start_date")
     end_date = state.get("end_date")
@@ -43,7 +44,7 @@ def plan_node(state: dict):
             prompt = f"""
             Create a detailed day-by-day trip plan for {destination}{date_info}.
             Duration: {duration} days
-            Budget: {budget} USD
+            Budget: {budget} {currency}
             Weather: {weather}
             User preferences: {prefs_text}
 

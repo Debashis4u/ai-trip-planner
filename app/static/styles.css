@@ -120,6 +120,30 @@ button, textarea, select, input {
   box-shadow: var(--shadow-md);
 }
 
+.hero-content {
+  margin-bottom: 1.5rem;
+}
+
+.section-title {
+  margin: 0 0 0.75rem;
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.section-description {
+  margin: 0;
+  color: var(--ink-muted);
+  max-width: 78ch;
+  line-height: 1.65;
+}
+
+.examples-label {
+  margin: 0 0 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--ink-muted);
 }
@@ -156,6 +180,7 @@ button, textarea, select, input {
   display: grid;
   grid-template-columns: minmax(360px, 400px) 1fr;
   gap: 2rem;
+  align-items: start;
 }
 
 .card {
@@ -172,6 +197,10 @@ button, textarea, select, input {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  position: sticky;
+  top: 7rem;
+  max-height: calc(100vh - 9rem);
+  overflow-y: auto;
 }
 
 .card-header {
@@ -205,6 +234,7 @@ button, textarea, select, input {
   background: var(--bg-secondary);
   color: var(--ink);
   transition: border-color 140ms ease, box-shadow 140ms ease;
+  min-height: 220px;
 }
 
 .composer-input:focus {
@@ -225,6 +255,10 @@ button, textarea, select, input {
   border-top: 1px solid var(--border);
   padding-top: 1.5rem;
   margin-top: auto;
+  position: sticky;
+  bottom: 0;
+  background: var(--bg-primary);
+  z-index: 2;
 }
 
 .hint-section {
@@ -262,6 +296,7 @@ button, textarea, select, input {
   justify-content: center;
   gap: 0.5rem;
   padding: 1rem 1.5rem;
+  min-height: 3rem;
   background: var(--accent-primary);
   color: #ffffff;
   border: none;
@@ -280,7 +315,7 @@ button, textarea, select, input {
 }
 
 .submit-button:disabled {
-  opacity: 0.6;
+  opacity: 0.75;
   cursor: not-allowed;
 }
 
@@ -297,8 +332,8 @@ button, textarea, select, input {
   display: inline-block;
   width: 1em;
   height: 1em;
-  border: 2px solid rgba(0, 0, 0, 0.1);
-  border-top-color: var(--accent-primary);
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #ffffff;
   border-radius: 100%;
   animation: spin 0.6s linear infinite;
 }
@@ -434,6 +469,27 @@ button, textarea, select, input {
   margin: 0;
 }
 
+.section-list {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.section-list li {
+  line-height: 1.45;
+}
+
+.section-list-numbered {
+  list-style: decimal;
+  padding-left: 1.25rem;
+}
+
+.section-list-numbered li::marker {
+  font-weight: 700;
+  color: var(--accent-primary);
+}
+
 .section-content pre {
   margin: 0;
   padding: 1rem;
@@ -478,6 +534,16 @@ button, textarea, select, input {
 @media (max-width: 1024px) {
   .workspace-grid {
     grid-template-columns: 1fr;
+  }
+
+  .composer-card {
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .composer-footer {
+    position: static;
   }
 
   .banner-container {

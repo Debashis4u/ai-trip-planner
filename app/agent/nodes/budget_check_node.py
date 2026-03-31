@@ -12,6 +12,7 @@ load_dotenv()
 def budget_check_node(state: dict):
     destination = state.get("destination")
     budget = state.get("budget")
+    currency = state.get("currency") or "USD"
     duration = state.get("duration")
     plan = state.get("plan", [])
 
@@ -28,8 +29,8 @@ def budget_check_node(state: dict):
         plan_text = "\n".join(plan)
         
         prompt = f"""
-        Analyze this {duration}-day trip plan for {destination} and estimate the total cost in USD.
-        Budget: {budget} USD
+        Analyze this {duration}-day trip plan for {destination} and estimate the total cost in {currency}.
+        Budget: {budget} {currency}
         
         Trip Plan:
         {plan_text}
@@ -61,6 +62,7 @@ def budget_check_node(state: dict):
         return {
             **state,
             "estimated_cost": estimated_cost,
+            "currency": currency,
             "is_within_budget": is_within_budget
         }
 

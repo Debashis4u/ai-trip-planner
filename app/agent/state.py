@@ -4,6 +4,7 @@ class TripState(TypedDict):
     user_input: str
     destination: Optional[str]
     budget: Optional[int]
+    currency: Optional[str]
     duration: Optional[int]
     start_date: Optional[str]
     end_date: Optional[str]
