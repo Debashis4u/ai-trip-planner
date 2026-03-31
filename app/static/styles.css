@@ -120,34 +120,6 @@ button, textarea, select, input {
   box-shadow: var(--shadow-md);
 }
 
-.hero-content {
-  margin-bottom: 2rem;
-}
-
-.section-title {
-  margin: 0 0 0.75rem 0;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--ink);
-}
-
-.section-description {
-  margin: 0;
-  font-size: 0.95rem;
-  color: var(--ink-muted);
-  line-height: 1.6;
-}
-
-.examples-section {
-  margin-top: 1.5rem;
-}
-
-.examples-label {
-  display: block;
-  margin: 0 0 0.75rem 0;
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--ink-muted);
 }
@@ -220,34 +192,6 @@ button, textarea, select, input {
   font-size: 0.85rem;
   color: var(--ink-muted);
   line-height: 1.5;
-}
-
-.field-label {
-  display: block;
-  margin: 0 0 0.5rem 0;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--ink-muted);
-}
-
-.date-input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 0.9rem;
-  background: var(--bg-secondary);
-  color: var(--ink);
-  transition: border-color 140ms ease, box-shadow 140ms ease;
-  margin-bottom: 1rem;
-}
-
-.date-input:focus {
-  outline: none;
-  border-color: var(--accent-primary);
-  box-shadow: 0 0 0 3px var(--accent-light);
 }
 
 .composer-input {

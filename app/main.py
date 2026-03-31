@@ -39,7 +39,6 @@ graph = build_graph()
 
 class TripRequest(BaseModel):
     message: str
-    tripDate: str | None = None  # Format: YYYY-MM-DD
 
 @app.get("/")
 async def root():
@@ -51,22 +50,10 @@ async def api_root():
 
 @app.post("/plan-trip")
 async def plan_trip(request: TripRequest):
-    from datetime import datetime, timedelta
-    
     logger.info(f"Planning trip for: {request.message}")
     context = {
         "user_input": request.message
     }
-    if request.tripDate:
-        context["start_date"] = request.tripDate
-        logger.info(f"Trip date: {request.tripDate}")
-        # Calculate tentative end_date (will be updated after duration is parsed)
-        try:
-            start = datetime.strptime(request.tripDate, "%Y-%m-%d")
-            end = start + timedelta(days=2)  # Default 3-day trip
-            context["end_date"] = end.strftime("%Y-%m-%d")
-        except ValueError:
-            pass
     result = graph.invoke(context)
     logger.info(f"Trip plan result: {result}")
     return result

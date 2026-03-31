@@ -32,7 +32,6 @@ function Banner() {
 
 function App() {
   const [message, setMessage] = useState(examplePrompts[0]);
-  const [tripDate, setTripDate] = useState("");
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -43,16 +42,12 @@ function App() {
     setError("");
 
     try {
-      const payload = { message };
-      if (tripDate) {
-        payload.tripDate = tripDate;
-      }
       const response = await fetch("/plan-trip", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ message }),
       });
 
       if (!response.ok) {
@@ -132,16 +127,6 @@ function App() {
           <div className="card-header">
             <h3 className="card-title">Describe Your Trip</h3>
             <p className="card-subtitle">Tell us about your destination, budget, duration, and preferences</p>
-          </div>
-          <div>
-            <label htmlFor="trip-date" className="field-label">Trip Start Date (Optional)</label>
-            <input
-              id="trip-date"
-              type="date"
-              className="date-input"
-              value=${tripDate}
-              onChange=${(event) => setTripDate(event.target.value)}
-            />
           </div>
           <textarea
             id="message"

@@ -8,7 +8,16 @@ def validate_node(state: dict):
     start_date = state.get("start_date")
     end_date = state.get("end_date")
     
-    errors = state.get("errors", [])
+    errors = list(state.get("errors", []))
+    has_upstream_fatal_error = state.get("is_valid") is False and len(errors) > 0
+
+    if has_upstream_fatal_error:
+        return {
+            **state,
+            "errors": errors,
+            "is_valid": False,
+            "end_date": end_date,
+        }
     
     # Validate destination
     if not destination or len(destination.strip()) < 2:
@@ -68,7 +77,16 @@ def validate_node(state: dict):
             errors.append(f"Invalid date format: {e}")
     
     # If critical errors, might want to stop processing
-    critical_errors = [e for e in errors if "Invalid" in e or "cannot" in e]
+    critical_errors = [
+        e
+        for e in errors
+        if (
+            e.startswith("Invalid destination")
+            or e.startswith("Invalid budget")
+            or e.startswith("Invalid duration")
+            or "cannot" in e
+        )
+    ]
     
     return {
         **state,
